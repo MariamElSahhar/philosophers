@@ -6,14 +6,14 @@
 #    By: melsahha <melsahha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/14 11:51:22 by melsahha          #+#    #+#              #
-#    Updated: 2023/04/17 16:20:32 by melsahha         ###   ########.fr        #
+#    Updated: 2023/04/20 17:05:59 by melsahha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 
 CC = gcc
-CFLAGS = -Wall -Werror -Wextra -g
+CFLAGS = -Wall -Werror -Wextra
 
 LIBFT = libftprintf.a
 LIBFT_DIR = ../printf/
@@ -21,7 +21,7 @@ LIBFT_DIR = ../printf/
 LINK = -L. -lftprintf -lpthread
 INCL = -I../include/ -I.
 
-SRC = main.c
+SRC = main.c utils.c philo.c init.c
 OBJ = $(SRC:.c=.o)
 
 #######################################
