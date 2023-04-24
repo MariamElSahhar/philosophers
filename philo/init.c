@@ -6,7 +6,7 @@
 /*   By: melsahha <melsahha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 12:36:10 by melsahha          #+#    #+#             */
-/*   Updated: 2023/04/20 16:48:17 by melsahha         ###   ########.fr       */
+/*   Updated: 2023/04/24 20:18:36 by melsahha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,18 @@ static void	init_data(t_data *data)
 	int	i;
 
 	pthread_mutex_init(&data->m_print, NULL);
-	// pthread_mutex_init(&data->m_sleep, NULL);
 	pthread_mutex_init(&data->m_timer, NULL);
 	pthread_mutex_init(&data->m_eat, NULL);
 	data->m_forks = (pthread_mutex_t *)malloc
 		(data->num_philos * sizeof(pthread_mutex_t));
+	data->forks_tracker = (int *) malloc
+		(data->num_philos * sizeof(int));
 	i = -1;
 	while (++i < data->num_philos)
+	{
+		data->forks_tracker[i] = 1;
 		pthread_mutex_init(&data->m_forks[i], NULL);
+	}
 }
 
 t_philo	*init(t_data *data)
@@ -40,10 +44,16 @@ t_philo	*init(t_data *data)
 	{
 		philos[i].philo_id = i;
 		philos[i].is_eating = 0;
+		philos[i].is_dead = 0;
+		philos[i].meals = 0;
+		gettimeofday(&philos[i].last_meal, NULL);
 		philos[i].args = data;
-		philos[i].m_fork1 = &data->m_forks[ascending(data->num_philos, i, 0)];
-		philos[i].m_fork2 = &data->m_forks[ascending(data->num_philos, i, 1)];
+		philos[i].left_fork_id = i;
+		philos[i].right_fork_id = next_fork(data->num_philos, i);
+		philos[i].m_left_fork = &data->m_forks[i];
+		philos[i].m_right_fork = &data->m_forks[next_fork(data->num_philos, i)];
 		philos[i].th_philo = (pthread_t *)malloc(sizeof(pthread_t));
+		philos[i].th_monitor = (pthread_t *)malloc(sizeof(pthread_t));
 		i++;
 	}
 	return (philos);
@@ -97,14 +107,19 @@ void	free_destroy(t_data *data, t_philo *philos)
 
 	i = -1;
 	while (++i < data->num_philos)
+	{
 		pthread_join(*philos[i].th_philo, NULL);
+		pthread_join(*philos[i].th_monitor, NULL);
+	}
 	i = -1;
 	while (++i < data->num_philos)
 	{
 		pthread_mutex_destroy(&data->m_forks[i]);
 		free(philos[i].th_philo);
+		free(philos[i].th_monitor);
 	}
 	free(data->m_forks);
+	free(data->forks_tracker);
 	pthread_mutex_destroy(&data->m_eat);
 	pthread_mutex_destroy(&data->m_timer);
 	// pthread_mutex_destroy(&data->m_sleep);

@@ -6,7 +6,7 @@
 /*   By: melsahha <melsahha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 11:50:55 by melsahha          #+#    #+#             */
-/*   Updated: 2023/04/20 17:10:02 by melsahha         ###   ########.fr       */
+/*   Updated: 2023/04/24 20:23:45 by melsahha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,37 +23,61 @@ void	philo_sleep(t_philo *philo)
 	pthread_mutex_unlock(&philo->args->m_print);
 	while (!times_up(start_sleeping, philo, philo->args->time_to_sleep))
 		usleep (10);
-	pthread_mutex_lock(&philo->args->m_print);
-	printf("%i %i is thinking\n",
-		get_time_stamp(philo->args->start_time), philo->philo_id + 1);
-	pthread_mutex_unlock(&philo->args->m_print);
 }
 
 void	philo_eat(t_philo *philo)
 {
-	struct timeval	start_eating;
-
-	pthread_mutex_lock(philo->m_fork1);
+	pthread_mutex_lock(philo->m_left_fork);
 	pthread_mutex_lock(&philo->args->m_print);
 	printf("%i %i has taken a fork\n",
 		get_time_stamp(philo->args->start_time), philo->philo_id + 1);
 	pthread_mutex_unlock(&philo->args->m_print);
-	pthread_mutex_lock(philo->m_fork2);
+	pthread_mutex_lock(philo->m_right_fork);
 	pthread_mutex_lock(&philo->args->m_print);
 	printf("%i %i has taken a fork\n",
 		get_time_stamp(philo->args->start_time), philo->philo_id + 1);
 	pthread_mutex_unlock(&philo->args->m_print);
-	gettimeofday(&start_eating, NULL);
+	gettimeofday(&philo->last_meal, NULL);
 	philo->is_eating = 1;
 	pthread_mutex_lock(&philo->args->m_print);
 	printf("%i %i is eating\n",
 		get_time_stamp(philo->args->start_time), philo->philo_id + 1);
 	pthread_mutex_unlock(&philo->args->m_print);
-	while (!times_up(start_eating, philo, philo->args->time_to_eat))
+	philo->meals ++;
+	while (!times_up(philo->last_meal, philo, philo->args->time_to_eat))
 		usleep (10);
 	philo->is_eating = 0;
-	pthread_mutex_unlock(philo->m_fork2);
-	pthread_mutex_unlock(philo->m_fork1);
+	philo->args->forks_tracker[philo->right_fork_id] = 1;
+	philo->args->forks_tracker[philo->left_fork_id] = 1;
+	pthread_mutex_unlock(philo->m_right_fork);
+	pthread_mutex_unlock(philo->m_left_fork);
+}
+
+int	forks_taken(t_philo *philo)
+{
+	int	left_id;
+	int	right_id;
+
+	left_id = philo->left_fork_id;
+	right_id = philo->right_fork_id;
+	pthread_mutex_lock(philo->m_left_fork);
+	if (!philo->args->forks_tracker[left_id])
+	{
+		pthread_mutex_unlock(philo->m_left_fork);
+		return(0);
+	}
+	pthread_mutex_lock(philo->m_right_fork);
+	if (!philo->args->forks_tracker[right_id])
+	{
+		pthread_mutex_unlock(philo->m_right_fork);
+		pthread_mutex_unlock(philo->m_left_fork);
+		return (0);
+	}
+	philo->args->forks_tracker[philo->left_fork_id] = 0;
+	philo->args->forks_tracker[philo->right_fork_id] = 0;
+	pthread_mutex_unlock(philo->m_right_fork);
+	pthread_mutex_unlock(philo->m_left_fork);
+	return (1);
 }
 
 void	*philosophize(void *philo_data)
@@ -61,9 +85,36 @@ void	*philosophize(void *philo_data)
 	t_philo	*philo;
 
 	philo = (t_philo *)philo_data;
-	pthread_mutex_lock(&philo->args->m_print);
-	pthread_mutex_unlock(&philo->args->m_print);
-	philo_eat(philo);
-	philo_sleep(philo);
+	while(!philo->is_dead && philo->meals < 2)
+	{
+		while(!forks_taken(philo))
+			usleep(10);
+		philo_eat(philo);
+		philo_sleep(philo);
+		pthread_mutex_lock(&philo->args->m_print);
+		printf("%i %i is thinking\n",
+			get_time_stamp(philo->args->start_time), philo->philo_id + 1);
+		pthread_mutex_unlock(&philo->args->m_print);
+	}
+	return (0);
+}
+
+void	*monitor(void *philo_data)
+{
+	t_philo	*philo;
+
+	philo = (t_philo *)philo_data;
+	while (!philo->is_dead && philo->meals < 2)
+	{
+		if (times_up(philo->last_meal, philo, philo->args->time_to_die))
+		{
+			philo->is_dead = 1;
+			pthread_mutex_lock(&philo->args->m_print);
+			printf("%i %i died\n",
+				get_time_stamp(philo->args->start_time), philo->philo_id + 1);
+			pthread_mutex_unlock(&philo->args->m_print);
+		}
+		usleep(10);
+	}
 	return (0);
 }
