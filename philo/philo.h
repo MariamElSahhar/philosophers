@@ -6,7 +6,7 @@
 /*   By: melsahha <melsahha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 11:50:58 by melsahha          #+#    #+#             */
-/*   Updated: 2023/04/27 13:50:13 by melsahha         ###   ########.fr       */
+/*   Updated: 2023/04/27 15:41:34 by melsahha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <pthread.h>
 # include <sys/time.h>
 
-#define DIE 550
+#define DIE 810
 #define SLEEP 200
 #define EAT 200
 #define NUM_MEALS 5
@@ -38,6 +38,7 @@ typedef struct s_data {
 	pthread_mutex_t	m_timer;
 	pthread_mutex_t	m_print;
 	pthread_mutex_t	*m_forks;
+	pthread_t		meal_monitor;
 	t_philo			*philos;
 }	t_data;
 
@@ -45,8 +46,6 @@ typedef struct s_philo {
 	pthread_t		*th_philo;
 	pthread_t		*th_monitor;
 	int				philo_id;
-	int				is_dead;
-	int				is_eating;
 	int				meals;
 	struct timeval	last_meal_start;
 	struct timeval	last_meal_end;

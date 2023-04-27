@@ -6,7 +6,7 @@
 /*   By: melsahha <melsahha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 11:50:55 by melsahha          #+#    #+#             */
-/*   Updated: 2023/04/27 13:56:36 by melsahha         ###   ########.fr       */
+/*   Updated: 2023/04/27 15:42:26 by melsahha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,16 +41,16 @@ void	philo_eat(t_philo *philo)
 			get_time_stamp(philo->args->start_time), philo->philo_id + 1);
 	pthread_mutex_unlock(&philo->args->m_print);
 	gettimeofday(&philo->last_meal_start, NULL);
-	philo->is_eating = 1;
 	pthread_mutex_lock(&philo->args->m_print);
 	if (!philo->args->game_over)
 		printf("%i %i is eating\n",
 			get_time_stamp(philo->args->start_time), philo->philo_id + 1);
 	pthread_mutex_unlock(&philo->args->m_print);
-	philo->meals ++;
 	while (!times_up(philo->last_meal_start, philo, philo->args->time_to_eat))
 		usleep (10);
-	philo->is_eating = 0;
+	pthread_mutex_lock(&philo->args->m_print);
+	philo->meals ++;
+	pthread_mutex_unlock(&philo->args->m_print);
 	philo->args->forks_tracker[philo->right_fork_id] = 1;
 	philo->args->forks_tracker[philo->left_fork_id] = 1;
 	gettimeofday(&philo->last_meal_end, NULL);
@@ -90,7 +90,7 @@ void	*philosophize(void *philo_data)
 	t_philo	*philo;
 
 	philo = (t_philo *)philo_data;
-	while(!philo->is_dead && philo->meals < NUM_MEALS && !philo->args->game_over)
+	while(!philo->args->game_over)
 	{
 		while(!forks_taken(philo))
 			usleep(10);
@@ -110,12 +110,9 @@ int	philo_ongoing(t_philo *philo)
 {
 	int	available;
 
-	pthread_mutex_lock(philo->m_left_fork);
 	pthread_mutex_lock(&philo->args->m_print);
-	available = !philo->is_eating && !philo->is_dead && philo->meals < NUM_MEALS
-		&& !philo->args->game_over;
+	available = !philo->args->game_over;
 	pthread_mutex_unlock(&philo->args->m_print);
-	pthread_mutex_unlock(philo->m_left_fork);
 	return (available);
 }
 
@@ -128,14 +125,13 @@ void	*monitor(void *philo_data)
 	{
 		if (times_up(philo->last_meal_end, philo, philo->args->time_to_die))
 		{
-			philo->is_dead = 1;
 			pthread_mutex_lock(&philo->args->m_print);
 			if (!philo->args->game_over)
+			{
 				printf("%i %i died\n",
 					get_time_stamp(philo->args->start_time), philo->philo_id + 1);
-			if (!philo->args->game_over)
-			{
 				philo->args->game_over = 1;
+				pthread_mutex_unlock(&philo->args->m_print);
 				return (0);
 			}
 			pthread_mutex_unlock(&philo->args->m_print);

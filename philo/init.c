@@ -6,7 +6,7 @@
 /*   By: melsahha <melsahha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 12:36:10 by melsahha          #+#    #+#             */
-/*   Updated: 2023/04/27 13:45:12 by melsahha         ###   ########.fr       */
+/*   Updated: 2023/04/27 15:41:47 by melsahha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,6 @@ t_philo	*init(t_data *data)
 	while (i < data->num_philos)
 	{
 		philos[i].philo_id = i;
-		philos[i].is_eating = 0;
-		philos[i].is_dead = 0;
 		philos[i].meals = 0;
 		gettimeofday(&philos[i].last_meal_end, NULL);
 		philos[i].args = data;
@@ -94,7 +92,7 @@ int	parse_input(int c, char **v, t_data *data)
 		data->time_to_die = DIE;
 		data->time_to_sleep = SLEEP;
 		data->time_to_eat = EAT;
-		data->num_eat = -1;
+		data->num_eat = NUM_MEALS;
 		if (c == 6)
 			data->num_eat = ft_atoi(v[6]);
 		return (1);
@@ -112,6 +110,7 @@ void	free_destroy(t_data *data, t_philo *philos)
 		pthread_join(*philos[i].th_philo, NULL);
 		pthread_join(*philos[i].th_monitor, NULL);
 	}
+	pthread_join(data->meal_monitor, NULL);
 	i = -1;
 	while (++i < data->num_philos)
 	{
@@ -123,7 +122,6 @@ void	free_destroy(t_data *data, t_philo *philos)
 	free(data->forks_tracker);
 	pthread_mutex_destroy(&data->m_eat);
 	pthread_mutex_destroy(&data->m_timer);
-	// pthread_mutex_destroy(&data->m_sleep);
 	pthread_mutex_destroy(&data->m_print);
 	free(philos);
 }
