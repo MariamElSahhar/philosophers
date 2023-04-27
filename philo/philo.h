@@ -6,7 +6,7 @@
 /*   By: melsahha <melsahha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 11:50:58 by melsahha          #+#    #+#             */
-/*   Updated: 2023/04/24 19:56:38 by melsahha         ###   ########.fr       */
+/*   Updated: 2023/04/27 13:50:13 by melsahha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,10 @@
 # include <pthread.h>
 # include <sys/time.h>
 
-#define DIE 300
+#define DIE 550
 #define SLEEP 200
 #define EAT 200
+#define NUM_MEALS 5
 
 typedef struct s_philo t_philo;
 
@@ -29,6 +30,7 @@ typedef struct s_data {
 	int				time_to_die;
 	int				time_to_eat;
 	int				time_to_sleep;
+	int				game_over;
 	struct timeval	start_time;
 	int				*forks_tracker;
 	pthread_mutex_t	m_eat;
@@ -46,7 +48,8 @@ typedef struct s_philo {
 	int				is_dead;
 	int				is_eating;
 	int				meals;
-	struct timeval	last_meal;
+	struct timeval	last_meal_start;
+	struct timeval	last_meal_end;
 	int				left_fork_id;
 	int				right_fork_id;
 	pthread_mutex_t	*m_left_fork;
@@ -58,7 +61,7 @@ t_philo	*init(t_data *data);
 int		parse_input(int c, char **v, t_data *data);
 
 void	free_destroy(t_data *data, t_philo *philos);
-int		next_fork(int total, int i);
+int		next_fork(int total, int i, int order);
 int		times_up(struct timeval start, t_philo *philo, int dur);
 int		get_time_stamp(struct timeval start);
 int		get_next_philo_id(t_philo *philo);

@@ -6,7 +6,7 @@
 /*   By: melsahha <melsahha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 11:48:18 by melsahha          #+#    #+#             */
-/*   Updated: 2023/04/24 19:18:02 by melsahha         ###   ########.fr       */
+/*   Updated: 2023/04/27 13:14:53 by melsahha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,22 @@ int	times_up(struct timeval start, t_philo *philo, int dur)
 	return (time_up);
 }
 
-int	next_fork(int total, int i)
+int	next_fork(int total, int i, int order)
 {
-	if (i == total - 1)
+	if (order == 0)
+	{
+		if (i == total - 1)
 			return (0);
-	return (i + 1);
+		else
+			return (i);
+	}
+	else
+	{
+		if (i == total - 1)
+			return (i);
+		else
+			return (i + 1);
+	}
 }
 
 int	get_next_philo_id(t_philo *philo)

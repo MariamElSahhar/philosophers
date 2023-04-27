@@ -6,7 +6,7 @@
 /*   By: melsahha <melsahha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 12:36:10 by melsahha          #+#    #+#             */
-/*   Updated: 2023/04/24 20:18:36 by melsahha         ###   ########.fr       */
+/*   Updated: 2023/04/27 13:45:12 by melsahha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ static void	init_data(t_data *data)
 	pthread_mutex_init(&data->m_print, NULL);
 	pthread_mutex_init(&data->m_timer, NULL);
 	pthread_mutex_init(&data->m_eat, NULL);
+	data->game_over = 0;
 	data->m_forks = (pthread_mutex_t *)malloc
 		(data->num_philos * sizeof(pthread_mutex_t));
 	data->forks_tracker = (int *) malloc
@@ -46,12 +47,12 @@ t_philo	*init(t_data *data)
 		philos[i].is_eating = 0;
 		philos[i].is_dead = 0;
 		philos[i].meals = 0;
-		gettimeofday(&philos[i].last_meal, NULL);
+		gettimeofday(&philos[i].last_meal_end, NULL);
 		philos[i].args = data;
-		philos[i].left_fork_id = i;
-		philos[i].right_fork_id = next_fork(data->num_philos, i);
-		philos[i].m_left_fork = &data->m_forks[i];
-		philos[i].m_right_fork = &data->m_forks[next_fork(data->num_philos, i)];
+		philos[i].left_fork_id = next_fork(data->num_philos, i, 0);
+		philos[i].right_fork_id = next_fork(data->num_philos, i, 1);
+		philos[i].m_left_fork = &data->m_forks[next_fork(data->num_philos, i, 0)];
+		philos[i].m_right_fork = &data->m_forks[next_fork(data->num_philos, i, 1)];
 		philos[i].th_philo = (pthread_t *)malloc(sizeof(pthread_t));
 		philos[i].th_monitor = (pthread_t *)malloc(sizeof(pthread_t));
 		i++;
