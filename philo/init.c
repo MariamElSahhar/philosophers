@@ -6,7 +6,7 @@
 /*   By: melsahha <melsahha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 12:36:10 by melsahha          #+#    #+#             */
-/*   Updated: 2023/04/27 15:41:47 by melsahha         ###   ########.fr       */
+/*   Updated: 2023/04/28 12:26:55 by melsahha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ t_philo	*init(t_data *data)
 
 static int	check_input(int c, char **v)
 {
-/* 	int	i;
+	int	i;
 	int	j;
 
 	if (c < 5 || c > 6)
@@ -78,9 +78,7 @@ static int	check_input(int c, char **v)
 			j++;
 		}
 		i++;
-	} */
-	if (c && v)
-		return (1);
+	}
 	return (1);
 }
 
@@ -89,12 +87,13 @@ int	parse_input(int c, char **v, t_data *data)
 	if (check_input(c, v))
 	{
 		data->num_philos = ft_atoi(v[1]);
-		data->time_to_die = DIE;
-		data->time_to_sleep = SLEEP;
-		data->time_to_eat = EAT;
-		data->num_eat = NUM_MEALS;
+		data->time_to_die = ft_atoi(v[2]);
+		data->time_to_sleep = ft_atoi(v[3]);
+		data->time_to_eat = ft_atoi(v[4]);
 		if (c == 6)
-			data->num_eat = ft_atoi(v[6]);
+			data->num_eat = ft_atoi(v[5]);
+		else
+			data->num_eat = -1;
 		return (1);
 	}
 	return (0);

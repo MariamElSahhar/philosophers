@@ -6,7 +6,7 @@
 /*   By: melsahha <melsahha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 11:50:58 by melsahha          #+#    #+#             */
-/*   Updated: 2023/04/27 15:41:34 by melsahha         ###   ########.fr       */
+/*   Updated: 2023/04/28 12:26:59 by melsahha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,6 @@
 # include "../include/ft_printf.h"
 # include <pthread.h>
 # include <sys/time.h>
-
-#define DIE 810
-#define SLEEP 200
-#define EAT 200
-#define NUM_MEALS 5
 
 typedef struct s_philo t_philo;
 
@@ -34,7 +29,6 @@ typedef struct s_data {
 	struct timeval	start_time;
 	int				*forks_tracker;
 	pthread_mutex_t	m_eat;
-	// pthread_mutex_t	m_sleep;
 	pthread_mutex_t	m_timer;
 	pthread_mutex_t	m_print;
 	pthread_mutex_t	*m_forks;
@@ -64,6 +58,8 @@ int		next_fork(int total, int i, int order);
 int		times_up(struct timeval start, t_philo *philo, int dur);
 int		get_time_stamp(struct timeval start);
 int		get_next_philo_id(t_philo *philo);
+int		check_game_over(t_data *data);
+
 
 void	*philosophize(void *philo_data);
 void	*monitor(void *philo_data);

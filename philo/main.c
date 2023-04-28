@@ -6,7 +6,7 @@
 /*   By: melsahha <melsahha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 11:58:17 by melsahha          #+#    #+#             */
-/*   Updated: 2023/04/27 15:40:39 by melsahha         ###   ########.fr       */
+/*   Updated: 2023/04/28 12:24:56 by melsahha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	*meal_monitor(void *args)
 
 	data = (t_data *)args;
 	done = 0;
-	while (!check_game_over(data) && !done)
+	while (!check_game_over(data) && !done && data->num_eat != -1)
 	{
 		i = -1;
 		done = 1;
@@ -47,7 +47,6 @@ void	*meal_monitor(void *args)
 			return (0);
 		}
 		pthread_mutex_unlock(&data->m_print);
-
 	}
 	return (0);
 }
