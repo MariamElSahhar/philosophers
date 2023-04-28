@@ -6,7 +6,7 @@
 /*   By: melsahha <melsahha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 11:50:55 by melsahha          #+#    #+#             */
-/*   Updated: 2023/04/28 16:57:05 by melsahha         ###   ########.fr       */
+/*   Updated: 2023/04/28 17:25:56 by melsahha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ static void	philo_sleep(t_philo *philo)
 {
 	struct timeval	start_sleeping;
 
-	gettimeofday(&start_sleeping, 0);
 	pthread_mutex_lock(&philo->args->m_print);
+	gettimeofday(&start_sleeping, 0);
 	if (!philo->args->game_over)
 		printf("%lu %i is sleeping\n",
 			get_time_stamp(philo->args->start_time), philo->philo_id + 1);
@@ -52,7 +52,7 @@ static void	philo_eat(t_philo *philo)
 		printf("%lu %i is eating\n",
 			get_time_stamp(philo->args->start_time), philo->philo_id + 1);
 	pthread_mutex_unlock(&philo->args->m_print);
-	while (!times_up(philo->last_meal_start, philo, philo->args->time_to_eat))
+	while (!times_up(philo->last_meal_end, philo, philo->args->time_to_eat))
 		usleep(10);
 	pthread_mutex_lock(&philo->args->m_print);
 	philo->meals ++;
