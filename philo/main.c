@@ -6,7 +6,7 @@
 /*   By: melsahha <melsahha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 11:58:17 by melsahha          #+#    #+#             */
-/*   Updated: 2023/04/28 13:14:34 by melsahha         ###   ########.fr       */
+/*   Updated: 2023/04/28 15:25:16 by melsahha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	*monitor(void *philo_data)
 			&& !check_game_over(philo->args))
 		{
 			pthread_mutex_lock(&philo->args->m_print);
-			printf("%i %i died\n",
+			printf("%lu %i died\n",
 				get_time_stamp(philo->args->start_time), philo->philo_id + 1);
 			philo->args->game_over = 1;
 			pthread_mutex_unlock(&philo->args->m_print);
@@ -65,14 +65,6 @@ void	*meal_monitor(void *args)
 		pthread_mutex_unlock(&data->m_print);
 	}
 	return (0);
-}
-
-void	error_message(void)
-{
-	printf("Please enter the following positive integers:\n");
-	printf("1- number of philosophers\n2- time to die");
-	printf("\n3- time to eat\n4- time to sleep\n");
-	printf("(optional) number of times each philosopher must eat\n");
 }
 
 int	main(int c, char **v)

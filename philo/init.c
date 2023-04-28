@@ -6,7 +6,7 @@
 /*   By: melsahha <melsahha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 12:36:10 by melsahha          #+#    #+#             */
-/*   Updated: 2023/04/28 12:40:38 by melsahha         ###   ########.fr       */
+/*   Updated: 2023/04/28 16:58:18 by melsahha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,9 +87,9 @@ int	parse_input(int c, char **v, t_data *data)
 	if (check_input(c, v))
 	{
 		data->num_philos = ft_atoi(v[1]);
-		data->time_to_die = ft_atoi(v[2]);
-		data->time_to_sleep = ft_atoi(v[3]);
-		data->time_to_eat = ft_atoi(v[4]);
+		data->time_to_die = (unsigned long) ft_atoi(v[2]);
+		data->time_to_eat = (unsigned long) ft_atoi(v[3]);
+		data->time_to_sleep = (unsigned long) ft_atoi(v[4]);
 		if (c == 6)
 			data->num_eat = ft_atoi(v[5]);
 		else
@@ -97,30 +97,4 @@ int	parse_input(int c, char **v, t_data *data)
 		return (1);
 	}
 	return (0);
-}
-
-void	free_destroy(t_data *data, t_philo *philos)
-{
-	int	i;
-
-	i = -1;
-	while (++i < data->num_philos)
-	{
-		pthread_join(*philos[i].th_philo, NULL);
-		pthread_join(*philos[i].th_monitor, NULL);
-	}
-	pthread_join(data->meal_monitor, NULL);
-	i = -1;
-	while (++i < data->num_philos)
-	{
-		pthread_mutex_destroy(&data->m_forks[i]);
-		free(philos[i].th_philo);
-		free(philos[i].th_monitor);
-	}
-	free(data->m_forks);
-	free(data->forks_tracker);
-	pthread_mutex_destroy(&data->m_eat);
-	pthread_mutex_destroy(&data->m_timer);
-	pthread_mutex_destroy(&data->m_print);
-	free(philos);
 }

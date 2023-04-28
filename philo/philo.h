@@ -6,7 +6,7 @@
 /*   By: melsahha <melsahha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 11:50:58 by melsahha          #+#    #+#             */
-/*   Updated: 2023/04/28 12:40:02 by melsahha         ###   ########.fr       */
+/*   Updated: 2023/04/28 15:29:28 by melsahha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ typedef struct s_philo	t_philo;
 typedef struct s_data {
 	int				num_philos;
 	int				num_eat;
-	int				time_to_die;
-	int				time_to_eat;
-	int				time_to_sleep;
+	unsigned long	time_to_die;
+	unsigned long	time_to_eat;
+	unsigned long	time_to_sleep;
 	int				game_over;
 	struct timeval	start_time;
 	int				*forks_tracker;
@@ -50,17 +50,17 @@ typedef struct s_philo {
 	t_data			*args;
 }	t_philo;
 
-t_philo	*init(t_data *data);
-int		parse_input(int c, char **v, t_data *data);
-
-void	free_destroy(t_data *data, t_philo *philos);
-int		next_fork(int total, int i, int order);
-int		times_up(struct timeval start, t_philo *philo, int dur);
-int		get_time_stamp(struct timeval start);
-int		get_next_philo_id(t_philo *philo);
-int		check_game_over(t_data *data);
-
-void	*philosophize(void *philo_data);
-void	*monitor(void *philo_data);
+t_philo			*init(t_data *data);
+int				parse_input(int c, char **v, t_data *data);
+void			free_destroy(t_data *data, t_philo *philos);
+int				next_fork(int total, int i, int order);
+int				times_up(struct timeval start,
+					t_philo *philo, unsigned long dur);
+unsigned long	get_time_stamp(struct timeval start);
+int				get_next_philo_id(t_philo *philo);
+int				check_game_over(t_data *data);
+void			error_message(void);
+unsigned long	ft_atol(const char *str);
+void			*philosophize(void *philo_data);
 
 #endif

@@ -6,7 +6,7 @@
 #    By: melsahha <melsahha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/14 11:51:22 by melsahha          #+#    #+#              #
-#    Updated: 2023/04/28 13:16:07 by melsahha         ###   ########.fr        #
+#    Updated: 2023/04/28 15:27:55 by melsahha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ LIBFT_DIR = ../printf/
 LINK = -L. -lftprintf -lpthread
 INCL = -I../include/ -I.
 
-SRC = main.c utils.c philo.c init.c
+SRC = main.c utils.c utils2.c philo.c init.c
 OBJ = $(SRC:.c=.o)
 
 #######################################
