@@ -6,7 +6,7 @@
 /*   By: melsahha <melsahha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 12:36:10 by melsahha          #+#    #+#             */
-/*   Updated: 2023/04/28 12:26:55 by melsahha         ###   ########.fr       */
+/*   Updated: 2023/04/28 12:40:38 by melsahha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ t_philo	*init(t_data *data)
 		philos[i].args = data;
 		philos[i].left_fork_id = next_fork(data->num_philos, i, 0);
 		philos[i].right_fork_id = next_fork(data->num_philos, i, 1);
-		philos[i].m_left_fork = &data->m_forks[next_fork(data->num_philos, i, 0)];
-		philos[i].m_right_fork = &data->m_forks[next_fork(data->num_philos, i, 1)];
+		philos[i].m_left_fork = &data->m_forks[philos[i].left_fork_id];
+		philos[i].m_right_fork = &data->m_forks[philos[i].right_fork_id];
 		philos[i].th_philo = (pthread_t *)malloc(sizeof(pthread_t));
 		philos[i].th_monitor = (pthread_t *)malloc(sizeof(pthread_t));
 		i++;

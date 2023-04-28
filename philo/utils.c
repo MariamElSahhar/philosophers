@@ -6,7 +6,7 @@
 /*   By: melsahha <melsahha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 11:48:18 by melsahha          #+#    #+#             */
-/*   Updated: 2023/04/27 13:14:53 by melsahha         ###   ########.fr       */
+/*   Updated: 2023/04/28 13:14:14 by melsahha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,4 +63,14 @@ int	get_next_philo_id(t_philo *philo)
 	if (philo->philo_id == philo->args->num_philos - 1)
 		return (0);
 	return (philo->philo_id + 1);
+}
+
+int	check_game_over(t_data *data)
+{
+	int	over;
+
+	pthread_mutex_lock(&data->m_print);
+	over = data->game_over;
+	pthread_mutex_unlock(&data->m_print);
+	return (over);
 }

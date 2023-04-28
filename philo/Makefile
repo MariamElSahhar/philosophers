@@ -6,14 +6,14 @@
 #    By: melsahha <melsahha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/14 11:51:22 by melsahha          #+#    #+#              #
-#    Updated: 2023/04/28 11:52:48 by melsahha         ###   ########.fr        #
+#    Updated: 2023/04/28 13:16:07 by melsahha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 
 CC = gcc
-CFLAGS = -Wall -Werror -Wextra -g
+CFLAGS = -Wall -Werror -Wextra
 
 LIBFT = libftprintf.a
 LIBFT_DIR = ../printf/

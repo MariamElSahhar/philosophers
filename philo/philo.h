@@ -6,7 +6,7 @@
 /*   By: melsahha <melsahha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 11:50:58 by melsahha          #+#    #+#             */
-/*   Updated: 2023/04/28 12:26:59 by melsahha         ###   ########.fr       */
+/*   Updated: 2023/04/28 12:40:02 by melsahha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <pthread.h>
 # include <sys/time.h>
 
-typedef struct s_philo t_philo;
+typedef struct s_philo	t_philo;
 
 typedef struct s_data {
 	int				num_philos;
@@ -59,7 +59,6 @@ int		times_up(struct timeval start, t_philo *philo, int dur);
 int		get_time_stamp(struct timeval start);
 int		get_next_philo_id(t_philo *philo);
 int		check_game_over(t_data *data);
-
 
 void	*philosophize(void *philo_data);
 void	*monitor(void *philo_data);
