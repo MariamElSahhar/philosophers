@@ -6,7 +6,7 @@
 /*   By: melsahha <melsahha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 12:36:10 by melsahha          #+#    #+#             */
-/*   Updated: 2023/04/28 16:58:18 by melsahha         ###   ########.fr       */
+/*   Updated: 2023/05/02 19:40:42 by melsahha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ static void	init_data(t_data *data)
 	pthread_mutex_init(&data->m_print, NULL);
 	pthread_mutex_init(&data->m_timer, NULL);
 	pthread_mutex_init(&data->m_eat, NULL);
+	pthread_mutex_init(&data->m_info, NULL);
 	data->game_over = 0;
 	data->m_forks = (pthread_mutex_t *)malloc
 		(data->num_philos * sizeof(pthread_mutex_t));

@@ -6,7 +6,7 @@
 /*   By: melsahha <melsahha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 11:50:58 by melsahha          #+#    #+#             */
-/*   Updated: 2023/04/28 15:29:28 by melsahha         ###   ########.fr       */
+/*   Updated: 2023/05/02 19:40:37 by melsahha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ typedef struct s_data {
 	int				game_over;
 	struct timeval	start_time;
 	int				*forks_tracker;
+	pthread_mutex_t	m_info;
 	pthread_mutex_t	m_eat;
 	pthread_mutex_t	m_timer;
 	pthread_mutex_t	m_print;
@@ -56,7 +57,7 @@ void			free_destroy(t_data *data, t_philo *philos);
 int				next_fork(int total, int i, int order);
 int				times_up(struct timeval start,
 					t_philo *philo, unsigned long dur);
-unsigned long	get_time_stamp(struct timeval start);
+unsigned long	time_since_start(struct timeval start);
 int				get_next_philo_id(t_philo *philo);
 int				check_game_over(t_data *data);
 void			error_message(void);

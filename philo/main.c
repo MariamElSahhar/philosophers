@@ -6,7 +6,7 @@
 /*   By: melsahha <melsahha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 11:58:17 by melsahha          #+#    #+#             */
-/*   Updated: 2023/04/28 17:19:39 by melsahha         ###   ########.fr       */
+/*   Updated: 2023/05/02 19:48:21 by melsahha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,17 @@ void	*monitor(void *philo_data)
 	philo = (t_philo *)philo_data;
 	while (!check_game_over(philo->args))
 	{
-		pthread_mutex_lock(&philo->args->m_print);
+		pthread_mutex_lock(&philo->args->m_info);
 		last_meal = philo->last_meal_end;
-		pthread_mutex_unlock(&philo->args->m_print);
+		pthread_mutex_unlock(&philo->args->m_info);
 		if (times_up(last_meal, philo, philo->args->time_to_die)
 			&& !check_game_over(philo->args))
 		{
 			pthread_mutex_lock(&philo->args->m_print);
-			printf("%lu %i died\n",
-				get_time_stamp(philo->args->start_time), philo->philo_id + 1);
+			if (!philo->args->game_over)
+				printf("%lu %i died\n",
+					time_since_start(philo->args->start_time),
+					philo->philo_id + 1);
 			philo->args->game_over = 1;
 			pthread_mutex_unlock(&philo->args->m_print);
 			return (0);
@@ -50,7 +52,7 @@ void	*meal_monitor(void *args)
 	{
 		i = -1;
 		done = 1;
-		pthread_mutex_lock(&data->m_print);
+		pthread_mutex_lock(&data->m_info);
 		while (++i < data->num_philos)
 		{
 			if (data->philos[i].meals < data->num_eat)
@@ -59,10 +61,10 @@ void	*meal_monitor(void *args)
 		if (done)
 		{
 			data->game_over = 1;
-			pthread_mutex_unlock(&data->m_print);
+			pthread_mutex_unlock(&data->m_info);
 			return (0);
 		}
-		pthread_mutex_unlock(&data->m_print);
+		pthread_mutex_unlock(&data->m_info);
 	}
 	return (0);
 }

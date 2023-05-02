@@ -6,13 +6,13 @@
 /*   By: melsahha <melsahha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 11:48:18 by melsahha          #+#    #+#             */
-/*   Updated: 2023/04/28 17:27:32 by melsahha         ###   ########.fr       */
+/*   Updated: 2023/05/02 19:39:40 by melsahha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-unsigned long	get_time_stamp(struct timeval start)
+unsigned long	time_since_start(struct timeval start)
 {
 	struct timeval	curr_time;
 	unsigned long	time_stamp;
@@ -34,7 +34,7 @@ int	times_up(struct timeval start, t_philo *philo, unsigned long dur)
 	gettimeofday(&curr_time, 0);
 	lapsed = (curr_time.tv_sec - start.tv_sec) * (unsigned long) 1000;
 	lapsed = lapsed + (curr_time.tv_usec - start.tv_usec) / 1000;
-	if (lapsed >= dur)
+	if (lapsed > dur)
 		time_up = 1;
 	pthread_mutex_unlock(&philo->args->m_timer);
 	return (time_up);

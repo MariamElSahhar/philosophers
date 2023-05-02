@@ -6,7 +6,7 @@
 /*   By: melsahha <melsahha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 15:21:00 by melsahha          #+#    #+#             */
-/*   Updated: 2023/04/28 15:29:17 by melsahha         ###   ########.fr       */
+/*   Updated: 2023/05/02 19:40:45 by melsahha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,5 +60,6 @@ void	free_destroy(t_data *data, t_philo *philos)
 	pthread_mutex_destroy(&data->m_eat);
 	pthread_mutex_destroy(&data->m_timer);
 	pthread_mutex_destroy(&data->m_print);
+	pthread_mutex_destroy(&data->m_info);
 	free(philos);
 }
