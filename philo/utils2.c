@@ -6,11 +6,19 @@
 /*   By: melsahha <melsahha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 15:21:00 by melsahha          #+#    #+#             */
-/*   Updated: 2023/05/02 19:40:45 by melsahha         ###   ########.fr       */
+/*   Updated: 2023/05/03 21:08:16 by melsahha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+int	ft_isdigit(int c)
+{
+	if (c >= '0' && c <= '9')
+		return (1);
+	return (0);
+}
+
 
 void	error_message(void)
 {

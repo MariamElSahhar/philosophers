@@ -6,7 +6,7 @@
 #    By: melsahha <melsahha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/14 11:51:22 by melsahha          #+#    #+#              #
-#    Updated: 2023/05/02 19:39:13 by melsahha         ###   ########.fr        #
+#    Updated: 2023/05/03 21:10:52 by melsahha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,20 +15,15 @@ NAME = philo
 CC = gcc
 CFLAGS = -Wall -Werror -Wextra -g
 
-LIBFT = libftprintf.a
-LIBFT_DIR = ../printf/
+LINK = -L. -lpthread
+INCL = -I.
 
-LINK = -L. -lftprintf -lpthread
-INCL = -I../include/ -I.
-
-SRC = main.c utils.c utils2.c philo.c init.c
+SRC = main.c utils.c utils2.c utils3.c philo.c init.c
 OBJ = $(SRC:.c=.o)
 
 #######################################
 
 $(NAME): $(OBJ)
-	make -sC $(LIBFT_DIR)
-	mv  $(LIBFT_DIR)$(LIBFT) .
 	$(CC) $(CFLAGS) $(OBJ) $(LINK) -o $(NAME)
 
 all: $(NAME)
@@ -37,8 +32,6 @@ $(OBJ): %.o: %.c
 	$(CC) -c $(CFLAGS) $(INCL) $< -o $@
 
 clean:
-	make -sC $(LIBFT_DIR) clean
-	rm -f $(LIBFT)
 	rm -f $(OBJ)
 
 fclean: clean

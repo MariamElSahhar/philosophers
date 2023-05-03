@@ -6,16 +6,18 @@
 /*   By: melsahha <melsahha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 11:50:58 by melsahha          #+#    #+#             */
-/*   Updated: 2023/05/02 19:40:37 by melsahha         ###   ########.fr       */
+/*   Updated: 2023/05/03 21:11:40 by melsahha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
 
-# include "../include/ft_printf.h"
 # include <pthread.h>
 # include <sys/time.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
 
 typedef struct s_philo	t_philo;
 
@@ -63,5 +65,8 @@ int				check_game_over(t_data *data);
 void			error_message(void);
 unsigned long	ft_atol(const char *str);
 void			*philosophize(void *philo_data);
+int		ft_isdigit(int c);
+int	ft_atoi(const char *str);
+
 
 #endif
