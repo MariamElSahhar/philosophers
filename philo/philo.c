@@ -6,7 +6,7 @@
 /*   By: melsahha <melsahha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 11:50:55 by melsahha          #+#    #+#             */
-/*   Updated: 2023/05/02 19:47:23 by melsahha         ###   ########.fr       */
+/*   Updated: 2023/05/04 11:01:58 by melsahha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,26 +68,10 @@ static void	philo_eat(t_philo *philo)
 
 static int	forks_taken(t_philo *philo)
 {
-	int	left_id;
-	int	right_id;
-
 	if (philo->args->num_philos == 1)
 		return (0);
-	left_id = philo->left_fork_id;
-	right_id = philo->right_fork_id;
 	pthread_mutex_lock(philo->m_left_fork);
-	if (!philo->args->forks_tracker[left_id])
-	{
-		pthread_mutex_unlock(philo->m_left_fork);
-		return (0);
-	}
 	pthread_mutex_lock(philo->m_right_fork);
-	if (!philo->args->forks_tracker[right_id])
-	{
-		pthread_mutex_unlock(philo->m_right_fork);
-		pthread_mutex_unlock(philo->m_left_fork);
-		return (0);
-	}
 	philo->args->forks_tracker[philo->right_fork_id] = 0;
 	philo->args->forks_tracker[philo->left_fork_id] = 0;
 	pthread_mutex_unlock(philo->m_right_fork);
@@ -114,7 +98,7 @@ void	*philosophize(void *philo_data)
 		printf("%lu %i is thinking\n",
 			time_since_start(philo->args->start_time), philo->philo_id + 1);
 		pthread_mutex_unlock(&philo->args->m_print);
-		usleep(40);
+		usleep(70);
 	}
 	return (0);
 }
