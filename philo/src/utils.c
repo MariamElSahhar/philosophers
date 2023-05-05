@@ -6,7 +6,7 @@
 /*   By: melsahha <melsahha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 11:48:18 by melsahha          #+#    #+#             */
-/*   Updated: 2023/05/02 19:39:40 by melsahha         ###   ########.fr       */
+/*   Updated: 2023/05/05 16:36:44 by melsahha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,13 @@ int	times_up(struct timeval start, t_philo *philo, unsigned long dur)
 	unsigned long	lapsed;
 	int				time_up;
 
-	pthread_mutex_lock(&philo->args->m_timer);
+	time_up = philo->philo_id;
 	time_up = 0;
 	gettimeofday(&curr_time, 0);
 	lapsed = (curr_time.tv_sec - start.tv_sec) * (unsigned long) 1000;
 	lapsed = lapsed + (curr_time.tv_usec - start.tv_usec) / 1000;
 	if (lapsed > dur)
 		time_up = 1;
-	pthread_mutex_unlock(&philo->args->m_timer);
 	return (time_up);
 }
 

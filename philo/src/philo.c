@@ -6,7 +6,7 @@
 /*   By: melsahha <melsahha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 11:50:55 by melsahha          #+#    #+#             */
-/*   Updated: 2023/05/04 11:01:58 by melsahha         ###   ########.fr       */
+/*   Updated: 2023/05/05 16:33:24 by melsahha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	philo_sleep(t_philo *philo)
 	pthread_mutex_unlock(&philo->args->m_print);
 	while (!check_game_over(philo->args)
 		&& !times_up(start_sleeping, philo, philo->args->time_to_sleep))
-		usleep(10);
+		usleep(60);
 }
 
 static void	take_forks(t_philo *philo)
@@ -55,7 +55,7 @@ static void	philo_eat(t_philo *philo)
 			time_since_start(philo->args->start_time), philo->philo_id + 1);
 	pthread_mutex_unlock(&philo->args->m_print);
 	while (!times_up(philo->last_meal_start, philo, philo->args->time_to_eat))
-		usleep(10);
+		usleep(60);
 	pthread_mutex_lock(&philo->args->m_info);
 	philo->meals ++;
 	gettimeofday(&philo->last_meal_end, NULL);
@@ -98,7 +98,7 @@ void	*philosophize(void *philo_data)
 		printf("%lu %i is thinking\n",
 			time_since_start(philo->args->start_time), philo->philo_id + 1);
 		pthread_mutex_unlock(&philo->args->m_print);
-		usleep(70);
+		usleep(100);
 	}
 	return (0);
 }
