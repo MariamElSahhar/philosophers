@@ -6,7 +6,7 @@
 /*   By: melsahha <melsahha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 15:21:00 by melsahha          #+#    #+#             */
-/*   Updated: 2023/05/03 21:08:16 by melsahha         ###   ########.fr       */
+/*   Updated: 2023/05/08 17:48:05 by melsahha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ int	ft_isdigit(int c)
 		return (1);
 	return (0);
 }
-
 
 void	error_message(void)
 {

@@ -6,7 +6,7 @@
 /*   By: melsahha <melsahha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 11:50:58 by melsahha          #+#    #+#             */
-/*   Updated: 2023/05/03 21:11:40 by melsahha         ###   ########.fr       */
+/*   Updated: 2023/05/08 17:47:56 by melsahha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,7 @@ int				check_game_over(t_data *data);
 void			error_message(void);
 unsigned long	ft_atol(const char *str);
 void			*philosophize(void *philo_data);
-int		ft_isdigit(int c);
-int	ft_atoi(const char *str);
-
+int				ft_isdigit(int c);
+int				ft_atoi(const char *str);
 
 #endif
