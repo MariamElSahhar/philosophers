@@ -12,13 +12,13 @@ The goal is to prevent deadlock and starvation while ensuring that each philosop
 - [GCC](https://gcc.gnu.org/) compiler
 
 ## Installation
-1. Clone the repository
+1. Clone the repository   
    `git clone https://github.com/yourusername/philosophers.git`
-2. Compile the program
+2. Compile the program   
    `cd philosophers/philo; make`
 
 ## Usage
-Use the following command to run:
+Use the following command to run:   
 `./philosophers [number_of_philosophers] [time_to_die] [time_to_eat] [time_to_sleep] [(optional) number_of_times_each_philosopher_must_eat]`  
 - number_of_philosophers: The number of philosophers sitting around the table.
 - time_to_die: The time (in milliseconds) after which a philosopher dies if they haven't started eating.
