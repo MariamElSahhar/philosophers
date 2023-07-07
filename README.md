@@ -29,3 +29,4 @@ Use the following command to run:
 ## Resources
 - [Dining Philosophers Problem](https://en.wikipedia.org/wiki/Dining_philosophers_problem) - Wikipedia article
 - [Philosophers Subject](https://github.com/rgilles42/Philosophers/blob/main/subject.pdf) - Project subject and requirements
+- [Philosophers Visualizer](https://nafuka11.github.io/philosophers-visualizer/) - Helpful simulation visualizer
