@@ -13,9 +13,11 @@ The goal is to prevent deadlock and starvation while ensuring that each philosop
 
 ## Installation
 1. Clone the repository   
-   `git clone https://github.com/yourusername/philosophers.git`
-2. Compile the program   
-   `cd philosophers/philo; make`
+   `git clone https://github.com/MariamElSahhar/philosophers.git`
+2. Cd into the philo/ directory   
+   `cd philosophers/philo`
+3. Compile the program   
+   `make`
 
 ## Usage
 Use the following command to run:   
