@@ -1,4 +1,4 @@
-# philosophers
+# Philosophers
 The "Philosophers" project is a simulation of the dining philosophers problem, which involves a set of philosophers sitting around a table and contemplating. Each philosopher alternates between thinking, eating, and sleeping, but they must share a limited number of resources (forks) with their adjacent philosophers.   
 The goal is to prevent deadlock and starvation while ensuring that each philosopher can eat.
 
